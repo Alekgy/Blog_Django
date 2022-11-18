@@ -45,6 +45,7 @@ def blog(request):
         'blogpost': blogpost
     })
 
+
 def create_post(request):
     if request.method == 'GET':
         return render(request, 'create.html', {
@@ -53,14 +54,14 @@ def create_post(request):
     else:
         try:
             form = NewPost(request.POST)
-            new_post= form.save(commit=False)
+            new_post = form.save(commit=False)
             new_post.user = request.user
             new_post.save()
             return redirect('blog')
         except ValueError:
-             return render(request, 'create.html', {
-            'form': NewPost,
-            'error': 'please provide valid data'
+            return render(request, 'create.html', {
+                'form': NewPost,
+                'error': 'please provide valid data'
             })
 
 
@@ -68,23 +69,29 @@ def signout(request):
     logout(request)
     return redirect('home')
 
+
 def signin(request):
     if request.method == 'GET':
         return render(request, 'signin.html', {
             'form': AuthenticationForm
         })
-    
+
     else:
         user = authenticate(
-            request, 
-            username=request.POST['username'], 
+            request,
+            username=request.POST['username'],
             password=request.POST['password'])
-        
+
         if user is None:
             return render(request, 'signin.html', {
-            'form': AuthenticationForm,
-            'error': 'User or Password is incorrect'
-        })
+                'form': AuthenticationForm,
+                'error': 'User or Password is incorrect'
+            })
         else:
             login(request, user)
             return redirect('blog')
+
+
+def profile(request):
+    posts = Post.objects.filter(user=request.user)
+    return render(request, 'profile.html', {'posts': posts})
