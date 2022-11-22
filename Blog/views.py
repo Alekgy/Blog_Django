@@ -6,6 +6,7 @@ from django.db import IntegrityError
 from .forms import NewPost
 from .models import Post
 
+
 # Create your views here.
 
 
@@ -16,8 +17,8 @@ def home(request):
 def signup(request):
     if request.method == 'GET':
         return render(request, 'signup.html',
-                      {"form": UserCreationForm
-                       })
+        {"form": UserCreationForm
+        })
 
     else:
         if request.POST["password1"] == request.POST["password2"]:
