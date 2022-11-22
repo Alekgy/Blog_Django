@@ -5,3 +5,4 @@ class NewPost(ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'text']
+
