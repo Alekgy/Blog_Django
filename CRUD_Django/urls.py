@@ -25,6 +25,7 @@ urlpatterns = [
     path('blog/create/', views.create_post, name='create_post'),
     path('logout/', views.signout, name='logout'),
     path('signin/', views.signin, name='signin'),
-    path('profile/', views.profile, name='profile'),
+    path('profile/', views.user_profile, name='user_profile'),
+    path('profile/<str:user_username>', views.profile, name='profile')
 
 ]

@@ -98,6 +98,11 @@ def signin(request):
             return redirect('blog')
 
 
-def profile(request):
+def profile(request, user_username):
+    posts = Post.objects.filter(user=user_username)
+    return render(request, 'profile.html', {'posts': posts})
+
+
+def user_profile(request):
     posts = Post.objects.filter(user=request.user)
     return render(request, 'profile.html', {'posts': posts})
