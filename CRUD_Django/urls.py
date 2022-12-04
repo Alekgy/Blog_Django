@@ -23,9 +23,10 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('blog/', views.blog, name='blog'),
     path('blog/create/', views.create_post, name='create_post'),
+    path('blog/<int:post_id>/update', views.update_post, name='update_post'),
+    path('blog/<int:post_id>/delete', views.delete_post, name='delete_post'),
     path('logout/', views.signout, name='logout'),
     path('signin/', views.signin, name='signin'),
-    path('profile/', views.user_profile, name='user_profile'),
-    path('profile/<str:user_username>', views.profile, name='profile')
+    path('profile/', views.user_profile, name='user_profile')
 
 ]

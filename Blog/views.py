@@ -1,10 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
 from django.db import IntegrityError
 from .forms import NewPost, RegisterUser
 from .models import Post
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -46,12 +47,17 @@ def signup(request):
 
 
 def blog(request):
-    blogpost = Post.objects.all()
-    return render(request, 'blog.html', {
-        'blogpost': blogpost
-    })
+    if request.method == 'GET':
+        blogpost = Post.objects.all()
+        return render(request, 'blog.html', {
+            'blogpost': blogpost
+            })
+    else:
+        print(request.POST)
+        return render(request, 'home.html')
 
 
+@login_required
 def create_post(request):
     if request.method == 'GET':
         return render(request, 'create.html', {
@@ -71,6 +77,31 @@ def create_post(request):
             })
 
 
+@login_required
+def update_post(request, post_id):
+    if request.method == 'GET':
+        post = get_object_or_404(Post, pk=post_id, user=request.user)
+        form = NewPost(instance=post)
+        return render(request, 'post_detail.html', {'form': form, 'post': post})
+    else:
+        try:
+            post = get_object_or_404(Post, pk=post_id, user=request.user)
+            form = NewPost(request.POST, instance=post)
+            form.save()
+            return redirect('blog')
+        except ValueError:
+            return render(request, 'post_detail.html', {'form': form, 'post': post, 'error': 'Error editing post'})
+
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, pk=post_id, user=request.user)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('blog')
+
+
+@login_required
 def signout(request):
     logout(request)
     return redirect('home')
@@ -98,11 +129,9 @@ def signin(request):
             return redirect('blog')
 
 
-def profile(request, user_username):
-    posts = Post.objects.filter(user=user_username)
-    return render(request, 'profile.html', {'posts': posts})
-
-
+@login_required
 def user_profile(request):
     posts = Post.objects.filter(user=request.user)
     return render(request, 'profile.html', {'posts': posts})
+
+

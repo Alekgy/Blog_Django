@@ -3,15 +3,23 @@
 {% block content %}
 
     <h1>Profile</h1>
-
+    <h2>Hello, welcome to your blogpost {{user.username}}</h2>
 
     {% for post in posts %}
     <li>
-        <h3>{{post.title}}</h3>
+        <h3><a href="{% url 'update_post' post.id %}">{{post.title}}</a></h3>
         <h4>{{post.created}}</h4>
         <p>{{post.text}}</p>
         <p>- By: {{post.user.username}}</p>
     </li>
+
+    <form method="POST" action="{% url 'delete_post' post.id %}" >
+        {% csrf_token %}
+            <button>
+                Delete
+            </button>
+    </form>
+
     {% endfor %}
 
 {% endblock %}

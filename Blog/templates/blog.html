@@ -5,12 +5,29 @@
 
 <ul>
     {% for blog in blogpost %}
-    <li>
-        <h3>{{blog.title}}</h3>
-        <h4>{{blog.created}}</h4>
-        <p>{{blog.text}}</p>
-        <p>- By: <a href="{% url 'profile' user.id %}">{{blog.user.username}}</a></p>
-    </li>
+
+        {% if user.is_superuser %}
+            <li>
+                <h3>{{blog.title}}</h3>
+                <h4>{{blog.created}}</h4>
+                <p>{{blog.text}}</p>
+                <p>- By: {{blog.user.username}}</p>
+            </li>
+            <form method="POST">
+                {% csrf_token %}
+                    <button>
+                        Delete
+                    </button>
+            </form>
+        {% else %}
+            <li>
+                <h3>{{blog.title}}</h3>
+                <h4>{{blog.created}}</h4>
+                <p>{{blog.text}}</p>
+                <p>- By: {{blog.user.username}}</p>
+            </li>
+        {% endif %}
+       
     {% endfor %}
 </ul>
 {% endblock %}
