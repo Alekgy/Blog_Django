@@ -1,33 +1,44 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-
-        <a class="navbar-brand" href="/">BlogPost</a>
-
+    <div class="container">
+      <a class="navbar-brand" href="/"><font style="vertical-align: inherit;">BlogPost</font></a>
+      <button 
+        class="navbar-toggler" 
+        type="button" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#navbarNav" 
+        aria-controls="navbarNav" 
+        aria-expanded="false" 
+        aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/">Home</a>
+                <a class="nav-link active" aria-current="page" href="/"><font style="vertical-align: inherit;">Home</font></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/blog">Blog</a>
             </li>
             {% if user.is_authenticated %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/blog/create">Create a new post</a>
+                    <a class="nav-link" href="/blog/create"><font style="vertical-align: inherit;">Create a new post</font></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/profile">Profile</a>
+                    <a class="nav-link" href="/profile"><font style="vertical-align: inherit;">Profile</font></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" href="/logout"><font style="vertical-align: inherit;">Logout</font></a>
                 </li>
             {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="/signup">SignUp</a>
+                    <a class="nav-link" href="/signup"><font style="vertical-align: inherit;">SignUp</font></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/signin">SignIn</a>
+                    <a class="nav-link" href="/signin"><font style="vertical-align: inherit;">SignIn</font></a>
                 </li>
             {% endif %}
         </ul>
+      </div>
     </div>
-    </div>
-</nav>
+  </nav>
+  

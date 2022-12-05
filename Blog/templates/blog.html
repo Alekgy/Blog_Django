@@ -1,33 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Blog</h1>
+<main class="container">
+    <div class="row">
+        <div class="col-md-5 offset-md-4">
+            <h1 class="text-center mt-4">Blog</h1>
+                <ul class="list-group">
+                {% for blog in blogpost %}
 
-<ul>
-    {% for blog in blogpost %}
-
-        {% if user.is_superuser %}
-            <li>
-                <h3>{{blog.title}}</h3>
-                <h4>{{blog.created}}</h4>
-                <p>{{blog.text}}</p>
-                <p>- By: {{blog.user.username}}</p>
-            </li>
-            <form method="POST">
-                {% csrf_token %}
-                    <button>
-                        Delete
-                    </button>
-            </form>
-        {% else %}
-            <li>
-                <h3>{{blog.title}}</h3>
-                <h4>{{blog.created}}</h4>
-                <p>{{blog.text}}</p>
-                <p>- By: {{blog.user.username}}</p>
-            </li>
-        {% endif %}
-       
-    {% endfor %}
-</ul>
+                    {% if user.is_superuser %}
+                        <li class="list-group-item card card-body mt-2 text-center" style="background-color: #9880ba">
+                            <h3>{{blog.title}}</h3>
+                            <h4>{{blog.created}}</h4>
+                            <p>{{blog.text}}</p>
+                            <p>- By: {{blog.user.username}}</p>
+                        </li>
+                        <form method="POST">
+                            {% csrf_token %}
+                                <button class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+                        </form>
+                    {% else %}
+                        <li class="list-group-item card card-body mt-2 text-center" style="background-color: #9880ba">
+                            <h3>{{blog.title}}</h3>
+                            <h4>{{blog.created}}</h4>
+                            <p>{{blog.text}}</p>
+                            <p>- By: {{blog.user.username}}</p>
+                        </li>
+                    {% endif %}
+                
+                {% endfor %}
+                </ul>
+        </div>
+    </div>
+</main>
 {% endblock %}
+
+
+
+

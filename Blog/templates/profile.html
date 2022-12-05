@@ -2,24 +2,30 @@
 
 {% block content %}
 
-    <h1>Profile</h1>
-    <h2>Hello, welcome to your blogpost {{user.username}}</h2>
+    <main class="container">
+        <div class="col-md-4 offset-md-4 mt-5">
+            <h1 class="text-center">Profile</h1>
+            <h2 class="text-center mt-4">Hello, welcome to your blogpost {{user.username}}</h2>
 
-    {% for post in posts %}
-    <li>
-        <h3><a href="{% url 'update_post' post.id %}">{{post.title}}</a></h3>
-        <h4>{{post.created}}</h4>
-        <p>{{post.text}}</p>
-        <p>- By: {{post.user.username}}</p>
-    </li>
+                {% for post in posts %}
+                    <ul class="card card-body mt-3" style="background-color: #9880ba">
+                        <li class="list-group-item mt-2 text-center">
+                            <h3 class="fw-bold"><a href="{% url 'update_post' post.id %}">{{post.title}}</a></h3>
+                            <h4 class="fw-light">{{post.created}}</h4>
+                            <p class="">{{post.text}}</p>
+                            <p>- By: {{post.user.username}}</p>
+                        </li>
+                    </ul>
+                <form method="POST" action="{% url 'delete_post' post.id %}" >
+                    {% csrf_token %}
+                        <button class="btn btn-danger">
+                            Delete
+                        </button>
+                </form>
+                {% endfor %}
+        </div>
+    </main>
 
-    <form method="POST" action="{% url 'delete_post' post.id %}" >
-        {% csrf_token %}
-            <button>
-                Delete
-            </button>
-    </form>
-
-    {% endfor %}
+    
 
 {% endblock %}
